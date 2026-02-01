@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import doctorImage from "./assets/doctor.jpeg";
+import "./DoctorProfile.css";
 
 export default function DoctorProfile() {
   const [scrollY, setScrollY] = useState(0);
@@ -55,7 +56,7 @@ export default function DoctorProfile() {
       <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-6 backdrop-blur-md bg-black/20 border-b border-white/5">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="font-serif text-2xl tracking-tight">
-            Sayed <span className="text-cyan-400">ALI</span>
+            Sayed <span className="text-cyan-400">AI</span>
           </div>
           <div className="hidden md:flex gap-8">
             {sections.map((section) => (
@@ -371,38 +372,6 @@ export default function DoctorProfile() {
           </div>
         </div>
       </footer>
-
-      <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Work+Sans:wght@300;400;500;600&display=swap');
-
-        * {
-          font-family: 'Work Sans', sans-serif;
-        }
-
-        h1, h2, h3, .font-serif {
-          font-family: 'Cormorant Garamond', serif;
-        }
-
-        @keyframes blob {
-          0%, 100% {
-            transform: translate(0, 0) scale(1);
-          }
-          33% {
-            transform: translate(30px, -50px) scale(1.1);
-          }
-          66% {
-            transform: translate(-20px, 20px) scale(0.9);
-          }
-        }
-
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
     </div>
   );
 }
