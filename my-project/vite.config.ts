@@ -1,14 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react()],
+  base: '/', // ensures assets work on Vercel
   build: {
-    outDir: 'dist',
-    assetsDir: 'assets',
-    emptyOutDir: true,
+    outDir: 'dist', // Vercel expects this folder
   },
-  // This ensures proper routing for SPAs
-  appType: 'spa'
-})
+});
