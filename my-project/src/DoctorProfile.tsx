@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import doctorImage from "./assets/doctor.jpeg";
-import "./DoctorProfile.css";
 
 export default function DoctorProfile() {
   const [scrollY, setScrollY] = useState(0);
