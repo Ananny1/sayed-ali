@@ -1,39 +1,42 @@
-import subprocess
+import requests
 
-def run_build():
+# Replace with your deployed Vercel URL
+DEPLOYMENT_URL = "https://sayed-ali-1.vercel.app/"
+
+def check_url(url):
     try:
-        # Run the Vite build command
-        result = subprocess.run(
-            ["npm", "run", "build"],
-            capture_output=True,
-            text=True,
-            check=False
-        )
+        response = requests.get(url)
+        print(f"URL: {url}")
+        print(f"Status Code: {response.status_code}")
 
-        stdout = result.stdout
-        stderr = result.stderr
-
-        print("=== STDOUT ===")
-        print(stdout)
-        print("=== STDERR ===")
-        print(stderr)
-
-        # Check for common Vercel errors
-        if "vite" in stderr.lower() and "error" in stderr.lower():
-            print("\n⚠️ Possible Vite build issue detected.")
-        if "node" in stderr.lower() and "version" in stderr.lower():
-            print("\n⚠️ Possible Node version mismatch. Vercel may need a newer Node version.")
-        if "cannot find module" in stderr.lower():
-            print("\n⚠️ Missing dependency detected. Try running 'npm install'.")
-        if result.returncode != 0:
-            print(f"\n❌ Build failed with exit code {result.returncode}")
+        if response.status_code == 200:
+            print("✅ The deployment exists and the URL is reachable.")
+        elif response.status_code == 404:
+            print("❌ NOT_FOUND (404). Possible causes:")
+            print("- URL is incorrect or has a typo")
+            print("- SPA routing is not configured correctly in Vercel")
+            print("- The output directory is wrong or missing index.html")
         else:
-            print("\n✅ Build completed successfully locally.")
+            print(f"⚠️ Received unexpected status code: {response.status_code}")
+        
+        # Optionally, print first 200 chars of the response to see content
+        print("Response snippet:", response.text[:200])
 
-    except FileNotFoundError:
-        print("❌ npm not found. Make sure Node.js and npm are installed.")
+    except requests.ConnectionError:
+        print("❌ Cannot connect to the deployment URL. Check network or DNS.")
     except Exception as e:
         print(f"❌ Unexpected error: {e}")
 
+def main():
+    check_url(DEPLOYMENT_URL)
+    # Check assets (optional)
+    assets = [
+        "assets/index-DeBHHDHb.js",
+        "assets/index-CY7AXiVJ.css",
+        "assets/doctor-D_qSJwjJ.jpeg"
+    ]
+    for asset in assets:
+        check_url(f"{DEPLOYMENT_URL}/{asset}")
+
 if __name__ == "__main__":
-    run_build()
+    main()
